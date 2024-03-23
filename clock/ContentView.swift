@@ -47,28 +47,33 @@ let formatPeriod = { (hour: Int, timeMode:TimeMode, timePeriod:TimePeriodDisplay
 }
 
 struct ContentView: View {
+    var body: some View {
+        Clock()
+    }
+}
+
+struct Clock: View {
     @State var currentTime:String = ""
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
-        VStack {
-            Text(currentTime)
-                .font(.system(size: 144))
-                .fontWeight(.ultraLight)
-        }.onReceive(timer) { time in
-            let date:Date = Date()
-            let calendar:Calendar = Calendar.current
-            let currentHour:Int = calendar.component(.hour, from: date)
-            let currentMinute:Int = calendar.component(.minute, from: date)
-            let leadingZeroForHours:LeadingZeroForHours = .HIDE
-            
-            let formattedHour:String = formatHour(currentHour, timeMode, leadingZeroForHours == LeadingZeroForHours.SHOW)
-            let formattedMinute:String = formatDigit(currentMinute, true)
-            let formattedPeriod:String = formatPeriod(currentHour, timeMode, timePeriod)
+        Text(currentTime)
+            .font(.system(size: 144))
+            .fontWeight(.ultraLight)
+            .onReceive(timer) { time in
+                let date:Date = Date()
+                let calendar:Calendar = Calendar.current
+                let currentHour:Int = calendar.component(.hour, from: date)
+                let currentMinute:Int = calendar.component(.minute, from: date)
+                let leadingZeroForHours:LeadingZeroForHours = .HIDE
+                
+                let formattedHour:String = formatHour(currentHour, timeMode, leadingZeroForHours == LeadingZeroForHours.SHOW)
+                let formattedMinute:String = formatDigit(currentMinute, true)
+                let formattedPeriod:String = formatPeriod(currentHour, timeMode, timePeriod)
 
-            currentTime = "\(formattedHour):\(formattedMinute)\(formattedPeriod)"
-        }
+                currentTime = "\(formattedHour):\(formattedMinute)\(formattedPeriod)"
+            }
     }
 }
 
