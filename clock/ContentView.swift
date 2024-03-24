@@ -48,7 +48,39 @@ let formatPeriod = { (hour: Int, timeMode:TimeMode, timePeriod:TimePeriodDisplay
 
 struct ContentView: View {
     var body: some View {
-        Clock()
+        // TODO
+        // Bind this to a settings switch
+        var doShowSettings:Bool = true
+        
+        // TODO
+        // Center the settings in the middle?
+        ZStack {
+            if doShowSettings {
+                Settings()
+            }
+            Clock()
+        }
+    }
+}
+
+struct Settings: View {
+    var body: some View {
+        List {
+            Picker(
+                selection: /*@START_MENU_TOKEN@*/.constant(1)/*@END_MENU_TOKEN@*/,
+                label: Label("Font", systemImage: "textformat")) {
+                /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
+                /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+            }
+            
+            Stepper(value: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant(4)/*@END_MENU_TOKEN@*/, in: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Range@*/1...10/*@END_MENU_TOKEN@*/) {
+                Label("Weight", systemImage: "bold")
+            }
+       
+            ColorPicker(selection: /*@START_MENU_TOKEN@*/.constant(.red)/*@END_MENU_TOKEN@*/) {
+                Label("Color", systemImage: "paintpalette.fill")
+            }
+        }
     }
 }
 
