@@ -21,16 +21,16 @@ enum LeadingZeroForHours {
 
 // TODO 
 // Read from options
-var timeMode:TimeMode = .TWELVE
-var timePeriod:TimePeriodDisplay = .HIDE
+var timeMode = TimeMode.TWELVE
+var timePeriod = TimePeriodDisplay.HIDE
 
 let formatDigit = { (digit: Int, leadingZero: Bool) -> String in
-    var precedingChar:String = leadingZero && digit < 10 ? "0" : ""
+    var precedingChar = leadingZero && digit < 10 ? "0" : ""
     return "\(precedingChar)\(digit)"
 }
 
 let formatHour = { (hour: Int, timeMode:TimeMode, leadingZero:Bool) -> String in
-    var hour: Int = hour
+    var hour = hour
     if timeMode == TimeMode.TWELVE && hour > 12 {
         hour -= 12
     }
@@ -50,7 +50,7 @@ struct ContentView: View {
     var body: some View {
         // TODO
         // Bind this to a settings switch
-        var doShowSettings:Bool = true
+        var doShowSettings = true
         
         // TODO
         // Center the settings in the middle?
@@ -94,15 +94,15 @@ struct Clock: View {
             .font(.system(size: 144))
             .fontWeight(.ultraLight)
             .onReceive(timer) { time in
-                let date:Date = Date()
-                let calendar:Calendar = Calendar.current
-                let currentHour:Int = calendar.component(.hour, from: date)
-                let currentMinute:Int = calendar.component(.minute, from: date)
-                let leadingZeroForHours:LeadingZeroForHours = .HIDE
+                let date = Date()
+                let calendar = Calendar.current
+                let currentHour = calendar.component(.hour, from: date)
+                let currentMinute = calendar.component(.minute, from: date)
+                let leadingZeroForHours = LeadingZeroForHours.HIDE
                 
-                let formattedHour:String = formatHour(currentHour, timeMode, leadingZeroForHours == LeadingZeroForHours.SHOW)
-                let formattedMinute:String = formatDigit(currentMinute, true)
-                let formattedPeriod:String = formatPeriod(currentHour, timeMode, timePeriod)
+                let formattedHour = formatHour(currentHour, timeMode, leadingZeroForHours == LeadingZeroForHours.SHOW)
+                let formattedMinute = formatDigit(currentMinute, true)
+                let formattedPeriod = formatPeriod(currentHour, timeMode, timePeriod)
 
                 currentTime = "\(formattedHour):\(formattedMinute)\(formattedPeriod)"
             }
